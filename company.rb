@@ -87,7 +87,7 @@ class Company
 end
 
 output = []
-customers = CSV.read('SOES - Input.csv')
+customers = CSV.read('SOES - Input.csv') # Mention your test file path here
 	opx = []
 	customers.each_with_index do |one,i|
 		if i!= 0 
@@ -135,5 +135,5 @@ customers.each_with_index do |one,i|
 end
 
 output.each do |qq|
-	p qq.join(' , ')
+	p qq.join(' , ')  # output print
 end
