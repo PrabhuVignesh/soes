@@ -1,12 +1,12 @@
 class Company
+		
 	def initialize(company_name,quantity)
 		@company_name = company_name
 		@quantity = quantity
+		@after_sell = 0
+		@after_buy = 0
 	end
-	def update(company_name,quantity)
-		@company_name = company_name
-		@quantity = quantity
-	end
+	
 	def company_name
 		@company_name
 	end 
@@ -17,38 +17,72 @@ class Company
 	def after_buy
 		@after_buy
 	end
-
 	def after_sell
 		@after_sell
 	end
+	def status_buy
+		@status_buy = @rem_buy > 0 ? "Open" : "Close"
+	end
+	def status_sell
+		@status_sell = @rem_sell > 0 ? "Open" : "Close"
+	end
 
 	def buy(qty)
-		if self.after_sell == 0
-			@status_buy = 'close'
+		if self.after_buy == nil or self.after_buy <=0
+			@status_buy = 'Closed'
+			@after_buy = qty
+			if self.after_sell == 0 
+				@rem_buy = 0
+			else
+				if self.after_buy > self.after_sell
+					@rem_buy = @after_buy - @after_sell
+				else
+					@rem_buy = 0
+				end
+			end
 			
 		else
-			@after_buy = self.after_sell - qty
-			@status_buy = 'open'
+			@status_buy = 'Open'
+			@after_buy = @after_buy + qty
+			if self.after_buy > self.after_sell
+				@rem_buy = @after_buy - @after_sell
+			else
+				@rem_buy = 0
+			end 
 		end
+		#@after_buy = self.quantity + qty
+		#self.update(self.company_name,@after_buy)
 	end
 
 	def sell(qty)
-		if self.after_buy == 0
-			@status_sell = 'close'
+		if self.after_sell == nil or self.after_sell <=0
+			@status_sell = 'Closed'
+			@after_sell = qty
+			if self.after_buy == 0
+				@rem_sell = 0
+			else
+				if self.after_sell > self.after_buy
+					@rem_sell = @after_sell - @after_buy
+				else
+					@rem_sell =0
+				end 
+			end
+			
 		else
-			@after_sell = self.after_buy - qty
-			@status_sell = 'open'
+			@status_sell = 'Open'
+			@after_sell = @after_sell + qty
+			if self.after_sell > self.after_buy
+				@rem_sell = @after_sell - @after_buy
+			else
+				@rem_sell = 0
+			end 
 		end
-		@after_sell = self.after_sell != nil ? self.after_sell - self.after_buy : qty
-		self.update(self.company_name,@after_buy)
 	end
-	
-	def status_buy
-		@status_buy
+	def rem_buy
+		@rem_buy
 	end
-
-	def status_sell			
-		@status_sell
+	def rem_sell
+		@rem_sell
 	end
 end
 
@@ -57,66 +91,36 @@ XYZ = Company.new('XYZ',0)
 
 
 # ============ company ABC 1st iter ================
-<<<<<<< HEAD
-p "============ company #{ABC.company_name} buy 10  1st iter ================"
-=======
-p "============ company #{ABC.company_name} buy(10) 1st iter ================"
->>>>>>> 5e643137ddf9f95167a5f3e954ed7bb735b3905f
+p "============ company #{ABC.company_name}  1st iter ================"
 
 ABC.buy(10)
-p ABC.after_buy
+p ABC.rem_buy
 p ABC.status_buy
 
 # ============ company XYZ 2st iter ================
-<<<<<<< HEAD
-p "============ company #{ XYZ.company_name } sell 15 2st iter ================"
+p "============ company #{ XYZ.company_name }2st iter ================"
 
 XYZ.sell(15)
-p XYZ.after_sell
+p XYZ.rem_sell
 p XYZ.status_sell
 
 # ============ company ABC 3st iter ================
-p "============ company #{ABC.company_name} sell 13 3rd iter ================"
-=======
-p "============ company #{ XYZ.company_name } sell(15) 2st iter ================"
-
-XYZ.sell(15)
-p XYZ.quantity
-p XYZ.status
-
-# ============ company ABC 3st iter ================
-p "============ company #{ABC.company_name} sell(13) 2st iter ================"
->>>>>>> 5e643137ddf9f95167a5f3e954ed7bb735b3905f
+p "============ company #{ABC.company_name}  2st iter ================"
 
 ABC.sell(13)
-p ABC.after_sell
+p ABC.rem_sell
 p ABC.status_sell
 
 # ============ company XYZ 4st iter ================
-<<<<<<< HEAD
-p "============ company #{ XYZ.company_name} buy 10  2st iter ================"
+p "============ company #{ XYZ.company_name} 2st iter ================"
 
 XYZ.buy(10)
-p XYZ.after_buy
+p XYZ.rem_buy
 p XYZ.status_buy
 
 # ============ company XYZ 5st iter ================
-p "============ company #{XYZ.company_name} buy 8 2st iter ================"
+p "============ company #{XYZ.company_name}  2st iter ================"
 
 XYZ.buy(8)
-p XYZ.after_buy
+p XYZ.rem_buy
 p XYZ.status_buy
-=======
-p "============ company #{ XYZ.company_name} buy(10) 2st iter ================"
-
-XYZ.buy(10)
-p XYZ.quantity
-p XYZ.status
-
-# ============ company XYZ 5st iter ================
-p "============ company #{XYZ.company_name} buy(8) 2st iter ================"
-
-XYZ.buy(8)
-p XYZ.quantity
-p XYZ.status
->>>>>>> 5e643137ddf9f95167a5f3e954ed7bb735b3905f
