@@ -1,5 +1,5 @@
-class Company
-		
+require 'csv'
+class Company		
 	def initialize(company_name,quantity)
 		@company_name = company_name
 		@quantity = quantity
@@ -28,7 +28,7 @@ class Company
 	end
 
 	def buy(qty)
-		if self.after_buy == nil or self.after_buy <=0
+		if self.after_buy == nil or self.after_buy <= 0
 			@status_buy = 'Closed'
 			@after_buy = qty
 			if self.after_sell == 0 
@@ -64,7 +64,7 @@ class Company
 				if self.after_sell > self.after_buy
 					@rem_sell = @after_sell - @after_buy
 				else
-					@rem_sell =0
+					@rem_sell = 0
 				end 
 			end
 			
@@ -86,41 +86,54 @@ class Company
 	end
 end
 
-ABC = Company.new('ABC',0)
-XYZ = Company.new('XYZ',0)
+output = []
+customers = CSV.read('SOES - Input.csv')
+	opx = []
+	customers.each_with_index do |one,i|
+		if i!= 0 
+		 opx << one[2]
+		end
+	end
+	opx = opx.uniq
 
+		items = []
+		opx.each do |val|
+		  items << Company.new(val,0)
 
-# ============ company ABC 1st iter ================
-p "============ company #{ABC.company_name}  1st iter ================"
+		end
+customers.each_with_index do |one,i|
+	op = []
+	pix = ''
+	oux = ''
+	if i == 0
+		one.each do |two|
+			op << two
+		end
+		output << op
+	else
+		slno = one[0]
+		side = one[1]
+		cmpny = one[2]
+		qty = one[3]
+		op << slno
+		op << side 
+		op << cmpny
+		if side == 'Buy'
+			items[opx.index(cmpny)].buy(qty.to_i)
+			pix += (items[opx.index(cmpny)].rem_buy).to_s
+			oux += (items[opx.index(cmpny)].status_buy).to_s
+		elsif 
+			items[opx.index(cmpny)].sell(qty.to_i)
+			pix += (items[opx.index(cmpny)].rem_sell).to_s
+			oux += (items[opx.index(cmpny)].status_sell).to_s
+		end
+		#items[opx.index(cmpny)].status_buy
+		 op << "(#{qty},#{pix},#{oux})"
+		output << op
+	end
+	
+end
 
-ABC.buy(10)
-p ABC.rem_buy
-p ABC.status_buy
-
-# ============ company XYZ 2st iter ================
-p "============ company #{ XYZ.company_name }2st iter ================"
-
-XYZ.sell(15)
-p XYZ.rem_sell
-p XYZ.status_sell
-
-# ============ company ABC 3st iter ================
-p "============ company #{ABC.company_name}  2st iter ================"
-
-ABC.sell(13)
-p ABC.rem_sell
-p ABC.status_sell
-
-# ============ company XYZ 4st iter ================
-p "============ company #{ XYZ.company_name} 2st iter ================"
-
-XYZ.buy(10)
-p XYZ.rem_buy
-p XYZ.status_buy
-
-# ============ company XYZ 5st iter ================
-p "============ company #{XYZ.company_name}  2st iter ================"
-
-XYZ.buy(8)
-p XYZ.rem_buy
-p XYZ.status_buy
+output.each do |qq|
+	p qq.join(' , ')
+end
