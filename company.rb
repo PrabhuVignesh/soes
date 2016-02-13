@@ -38,36 +38,36 @@ XYZ = Company.new('XYZ',0)
 
 
 # ============ company ABC 1st iter ================
-p "============ company #{ABC.company_name}  1st iter ================"
+p "============ company #{ABC.company_name} buy(10) 1st iter ================"
 
 ABC.buy(10)
 p ABC.quantity
 p ABC.status
 
 # ============ company XYZ 2st iter ================
-p "============ company #{ XYZ.company_name }2st iter ================"
+p "============ company #{ XYZ.company_name } sell(15) 2st iter ================"
 
-ABC.sell(15)
-p ABC.quantity
-p ABC.status
+XYZ.sell(15)
+p XYZ.quantity
+p XYZ.status
 
 # ============ company ABC 3st iter ================
-p "============ company #{ABC.company_name}  2st iter ================"
+p "============ company #{ABC.company_name} sell(13) 2st iter ================"
 
 ABC.sell(13)
 p ABC.quantity
 p ABC.status
 
 # ============ company XYZ 4st iter ================
-p "============ company #{ XYZ.company_name} 2st iter ================"
+p "============ company #{ XYZ.company_name} buy(10) 2st iter ================"
 
-ABC.buy(10)
-p ABC.quantity
-p ABC.status
+XYZ.buy(10)
+p XYZ.quantity
+p XYZ.status
 
 # ============ company XYZ 5st iter ================
-p "============ company #{XYZ.company_name}  2st iter ================"
+p "============ company #{XYZ.company_name} buy(8) 2st iter ================"
 
-ABC.buy(8)
-p ABC.quantity
-p ABC.status
+XYZ.buy(8)
+p XYZ.quantity
+p XYZ.status
